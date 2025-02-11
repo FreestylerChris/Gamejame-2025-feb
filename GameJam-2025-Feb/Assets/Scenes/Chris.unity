@@ -1712,6 +1712,7 @@ GameObject:
   - component: {fileID: 595091858}
   - component: {fileID: 595091857}
   - component: {fileID: 595091861}
+  - component: {fileID: 595091862}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1735,8 +1736,13 @@ MonoBehaviour:
   Player: {fileID: 595091856}
   OnTriggerObject: {fileID: 831775034}
   OffTriggerObject: {fileID: 522429888}
-  Ghost: {fileID: 8200027504542217784, guid: 9b16feb2e5d4dc047a62a37e6612db69, type: 3}
   cooldown: 0
+  ghostPrefab: {fileID: 1624829908427578326, guid: 9b16feb2e5d4dc047a62a37e6612db69,
+    type: 3}
+  playerPath: []
+  isRecording: 1
+  ghostSpeed: 5
+  reset: 0
 --- !u!61 &595091858
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1773,7 +1779,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1823,8 +1829,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fde84bdf6c57924f82e7f5a312eee7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1844,7 +1849,7 @@ Transform:
   m_GameObject: {fileID: 595091856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.99, y: 0.77, z: 0}
+  m_LocalPosition: {x: -4.91, y: 0.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1877,6 +1882,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &595091862
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595091856}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ef411f99681b8441b9da9547867333b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &775734120
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,7 +2431,7 @@ Transform:
   m_GameObject: {fileID: 846086794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -1.21, y: 0.65, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3598,8 +3624,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7801ed9851154114b896d37bd84fc8d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  Player: {fileID: 0}
   OnTriggerObject: {fileID: 831775034}
   OffTriggerObject: {fileID: 522429888}
+  cooldown: 30
+  ghostPrefab: {fileID: 0}
+  playerPath: []
+  isRecording: 1
+  ghostSpeed: 5
+  reset: 0
 --- !u!1 &1116856807
 GameObject:
   m_ObjectHideFlags: 0
