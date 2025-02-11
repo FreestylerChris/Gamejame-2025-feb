@@ -16,13 +16,14 @@ public class PlayerController : MonoBehaviour
     Vector2 Moving;
 
     public float cooldown = 30f;
+    int i;
 
     public GameObject ghostPrefab; // Sleep hier je Ghost prefab in
-    public List<Vector2> playerPath = new List<Vector2>(); // Positiegeschiedenis van speler
+    public List<Vector3> playerPath = new List<Vector3>(); // Positiegeschiedenis van speler
     public bool isRecording = true;
     public float ghostSpeed = 5f; // Snelheid van de ghost
     Vector3 start;
-    bool reset;
+   public bool reset;
     private void OnEnable()
     {
        Manager.Enable();
@@ -52,6 +53,13 @@ public class PlayerController : MonoBehaviour
         if (Player.transform.position == start)
         {
             reset = false;
+        }
+
+        Destroy(ghostPrefab, 5);
+
+        if (ghostPrefab.transform.position== playerPath[i])
+        {
+            playerPath.Clear();
         }
     }
 
@@ -94,7 +102,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Manager.Player.Interact.WasReleasedThisFrame())
         {
-            cooldown = 30f;
+            cooldown = 300f;
             
         }
 
@@ -106,13 +114,14 @@ public class PlayerController : MonoBehaviour
 
         GameObject ghost = Instantiate(ghostPrefab, playerPath[0], Quaternion.identity); // Spawn de ghost
         StartCoroutine(PlayGhostPathSmooth(ghost));
+        Destroy(ghostPrefab, 10);
     }
     IEnumerator PlayGhostPathSmooth(GameObject ghost)
     {
-        for (int i = 0; i < playerPath.Count - 1; i++)
+        for (i = 0; i < playerPath.Count - 1; i++)
         {
-            Vector2 startPos = playerPath[i];
-            Vector2 endPos = playerPath[i + 1];
+            Vector3 startPos = playerPath[i];
+            Vector3 endPos = playerPath[i + 1];
             float travelTime = Vector2.Distance(startPos, endPos) / ghostSpeed; // Bereken de tijd gebaseerd op snelheid
 
             float t = 0;
@@ -123,6 +132,11 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public void animation()
+    {
+
     }
 
 

@@ -14,7 +14,11 @@ public class Interaction : PlayerController
     // Update is called once per frame
     void Update()
     {
-        
+        if (reset)
+        {
+            OnTriggerObject.SetActive(false);
+            OffTriggerObject.SetActive(true);
+        }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,6 +28,11 @@ public class Interaction : PlayerController
             OffTriggerObject.SetActive(false);
         }
         if (collision.gameObject.CompareTag("Ghost"))
+        {
+            OnTriggerObject.SetActive(true);
+            OffTriggerObject.SetActive(false);
+        }
+        if (collision.gameObject.CompareTag("Object"))
         {
             OnTriggerObject.SetActive(true);
             OffTriggerObject.SetActive(false);
@@ -39,6 +48,11 @@ public class Interaction : PlayerController
         }
 
         if (collision.gameObject.CompareTag("Player"))
+        {
+            OnTriggerObject.SetActive(false);
+            OffTriggerObject.SetActive(true);
+        }
+        if (collision.gameObject.CompareTag("Object"))
         {
             OnTriggerObject.SetActive(false);
             OffTriggerObject.SetActive(true);
