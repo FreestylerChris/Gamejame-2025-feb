@@ -28,6 +28,7 @@ public class PlayerController : Gamemanager
     public float ghostSpeed = 5f; // Snelheid van de ghost
     public Vector3 start;
    public bool reset;
+    public Sprite OnCheckpoint;
     private void OnEnable()
     {
        Manager.Enable();
@@ -192,7 +193,7 @@ public class PlayerController : Gamemanager
     {
         if (collision.gameObject.CompareTag("Box"))
         {
-            Checkpoints.GetComponent<SpriteRenderer>().color = Color.white;
+            Checkpoints.GetComponent<SpriteRenderer>().sprite = OnCheckpoint;
             Checkpoints.GetComponent<CircleCollider2D>().enabled = false;
             playerPath.Clear();
             isRecording = true;

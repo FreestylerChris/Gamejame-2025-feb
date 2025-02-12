@@ -341,6 +341,7 @@ MonoBehaviour:
   ghostSpeed: 5
   start: {x: 0, y: 0, z: 0}
   reset: 0
+  OnCheckpoint: {fileID: 0}
 --- !u!58 &356907576
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1392,7 +1393,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -4291,6 +4292,7 @@ MonoBehaviour:
   ghostSpeed: 5
   start: {x: 0, y: 0, z: 0}
   reset: 0
+  OnCheckpoint: {fileID: 21300000, guid: 34a67bdb3760ae24387a8b4983bf2b42, type: 3}
 --- !u!61 &1232139781
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4537,6 +4539,7 @@ MonoBehaviour:
   ghostSpeed: 5
   start: {x: 0, y: 0, z: 0}
   reset: 0
+  OnCheckpoint: {fileID: 0}
 --- !u!58 &1377365226
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4792,6 +4795,7 @@ MonoBehaviour:
   ghostSpeed: 5
   start: {x: 0, y: 0, z: 0}
   reset: 0
+  OnCheckpoint: {fileID: 0}
 --- !u!1 &1512131078
 GameObject:
   m_ObjectHideFlags: 3
@@ -5070,7 +5074,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.8444445, y: 2.8444445}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5258,9 +5262,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
-    type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 322669b8e7eeaab468fdb452bf31d1aa, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
