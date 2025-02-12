@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Gamemanager 
 {
     InputManager Manager;
     public float speed;
@@ -13,16 +13,20 @@ public class PlayerController : MonoBehaviour
     public GameObject OnTriggerObject; 
     public GameObject OffTriggerObject;
 
+    public Animator a;
+
     Vector2 Moving;
 
-    public float cooldown = 30f;
-    int i;
+    public float cooldown;
+    public int i;
 
     public GameObject ghostPrefab; // Sleep hier je Ghost prefab in
+    public GameObject ghost; 
     public List<Vector3> playerPath = new List<Vector3>(); // Positiegeschiedenis van speler
+
     public bool isRecording = true;
     public float ghostSpeed = 5f; // Snelheid van de ghost
-    Vector3 start;
+    public Vector3 start;
    public bool reset;
     private void OnEnable()
     {
@@ -47,20 +51,15 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         GhostAbility();
-        cooldown =- 0.01f;
+        cooldown = -0.01f;
 
         cooldown = Math.Clamp(cooldown, 0, 30);
         if (Player.transform.position == start)
         {
             reset = false;
         }
-
-        Destroy(ghostPrefab, 5);
-
-        if (ghostPrefab.transform.position== playerPath[i])
-        {
-            playerPath.Clear();
-        }
+        
+        
     }
 
     public void Movement()
@@ -70,7 +69,58 @@ public class PlayerController : MonoBehaviour
         Moving.y = Manager.Player.MoveY.ReadValue<float>();
 
         Player.transform.Translate(Moving.x * speed * Time.deltaTime, Moving.y * speed * Time.deltaTime, 0);
-;       
+
+        if (Moving.x == 0 && Moving.y == 0)
+        {
+            a.SetBool("Idle", true);
+
+            a.SetBool("Right", false);
+            a.SetBool("Left", false);
+            a.SetBool("Up", false);
+            a.SetBool("Down", false);
+        }
+       
+        else  if (Moving.x > 0)
+        {
+            a.SetBool("Right", true);
+
+            a.SetBool("Left", false);
+            a.SetBool("Idle", false);
+            a.SetBool("Up", false);
+            a.SetBool("Down", false);
+
+        }
+        else if (Moving.x < 0)
+        {
+            a.SetBool("Left", true);
+
+            a.SetBool("Right", false);
+            a.SetBool("Idle", false);
+            a.SetBool("Up", false);
+            a.SetBool("Down", false);
+        }
+
+
+
+         else if (Moving.y > 0)
+        {
+            a.SetBool("Up", true);
+
+            a.SetBool("Right", false);
+            a.SetBool("Left", false);
+            a.SetBool("Idle", false);
+            a.SetBool("Down", false);
+
+        }
+       else  if (Moving.y < 0)
+        {
+            a.SetBool("Down", true);
+
+            a.SetBool("Right", false);
+            a.SetBool("Left", false);
+            a.SetBool("Idle", false);
+            a.SetBool("Up", false);
+        }
     }
     IEnumerator RecordPlayerPath()
     {
@@ -80,12 +130,9 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.5f); // Opslaan elke 0.5 seconde voor meer precisie
         }
     }
-    void ResetLevel()
-    {
-
-        Player.transform.position = start;
-        reset = true;
-    }
+  
+   
+    
 
     public void ActivateGhost()
     {
@@ -108,15 +155,22 @@ public class PlayerController : MonoBehaviour
 
 
     }
-    void SpawnGhost()
+
+    public void ResetLevel()
+    {
+
+        playerC.Player.transform.position = playerC.start;
+        playerC.reset = true;
+
+    }
+        void SpawnGhost()
     {
         if (playerPath.Count == 0) return; // Geen data? Stop hier.
 
-        GameObject ghost = Instantiate(ghostPrefab, playerPath[0], Quaternion.identity); // Spawn de ghost
-        StartCoroutine(PlayGhostPathSmooth(ghost));
-        Destroy(ghostPrefab, 10);
+        ghost = Instantiate(ghostPrefab, playerPath[0], Quaternion.identity); // Spawn de ghost
+        StartCoroutine(PlayGhostPathSmooth());
     }
-    IEnumerator PlayGhostPathSmooth(GameObject ghost)
+    IEnumerator PlayGhostPathSmooth()
     {
         for (i = 0; i < playerPath.Count - 1; i++)
         {
@@ -134,9 +188,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void animation()
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            Checkpoints.GetComponent<SpriteRenderer>().color = Color.white;
+            Checkpoints.GetComponent<CircleCollider2D>().enabled = false;
+            playerPath.Clear();
+            isRecording = true;
+            Destroy(ghost);
+            StartCoroutine(RecordPlayerPath());
+        }
     }
 
 

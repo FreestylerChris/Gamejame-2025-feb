@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Button
   - Ghost
+  - Button
+  - Box
+  - Object
   layers:
   - Default
   - TransparentFX

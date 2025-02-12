@@ -37,6 +37,12 @@ public class Interaction : PlayerController
             OnTriggerObject.SetActive(true);
             OffTriggerObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+            playerPath.Clear();
+            isRecording = true;
+        }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
