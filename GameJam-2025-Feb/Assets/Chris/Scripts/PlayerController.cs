@@ -31,6 +31,9 @@ public class PlayerController : Gamemanager
     public List<GameObject> Checkpoints = new List<GameObject>();
     public Sprite OnCheckpoint;
 
+    public bool touch;
+    public int checkpoints;
+
 
     public GameObject currentCheckpoint;
     private void OnEnable()
@@ -59,23 +62,18 @@ public class PlayerController : Gamemanager
         cooldown = -0.01f;
 
         cooldown = Math.Clamp(cooldown, 0, 30);
-        if (Player.transform.position == start)
+        if (Player.transform.position == start || Player.transform.position == currentCheckpoint.transform.position)
         {
             reset = false;
         }
+       
 
-
-
-        for (int i = 0; i < Checkpoints.Count;)
+        for (int i = 0; i < Checkpoints.Count; i++)
         {
             if (Checkpoints[i].GetComponent<SpriteRenderer>().sprite != OnCheckpoint)
             {
                 currentCheckpoint = Checkpoints[i];
-                Player.transform.position = Checkpoints[i].transform.position;
-            }
-            else
-            {
-                i++;
+                // Zet dit checkpoint als spawn
             }
         }
 
@@ -177,9 +175,16 @@ public class PlayerController : Gamemanager
 
     public void ResetLevel()
     {
+        if (checkpoints > 0)
+        {
+            Player.transform.position = currentCheckpoint.transform.position;
+        }
+        else
+        {
+            Player.transform.position = start;
 
-        playerC.Player.transform.position = playerC.start;
-        playerC.reset = true;
+        }
+        reset = true;
 
     }
         void SpawnGhost()
@@ -211,10 +216,12 @@ public class PlayerController : Gamemanager
     {
         if (collision.gameObject.CompareTag("Box"))
         {
+            touch = true;
+            checkpoints++;
             currentCheckpoint.GetComponent<SpriteRenderer>().sprite = OnCheckpoint;
-            currentCheckpoint.GetComponent<CircleCollider2D>().enabled = false;
             playerPath.Clear();
             isRecording = true;
+            touch = false;
             Destroy(ghost);
             StartCoroutine(RecordPlayerPath());
         }
