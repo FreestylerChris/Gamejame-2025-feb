@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interaction : MonoBehaviour
+public class Interaction : LevelButtons
 {
     PlayerController p;
     // Start is called before the first frame update
@@ -20,42 +20,36 @@ public class Interaction : MonoBehaviour
             p.OffTriggerObject.SetActive(true);
         }
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            p.OnTriggerObject.SetActive(true);
-            p.OffTriggerObject.SetActive(false);
+            buttonspressed++;
         }
         if (collision.gameObject.CompareTag("Ghost"))
         {
-            p.OnTriggerObject.SetActive(true);
-            p.OffTriggerObject.SetActive(false);
+            buttonspressed++;
         }
         if (collision.gameObject.CompareTag("Object"))
         {
-            p.OnTriggerObject.SetActive(true);
-            p.OffTriggerObject.SetActive(false);
+            buttonspressed++;
         }
     }
 
-    public void OnTriggerExit2D(Collider2D collision)
+     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ghost"))
         {
-            p.OnTriggerObject.SetActive(false);
-            p.OffTriggerObject.SetActive(true);
+            buttonspressed--;
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            p.OnTriggerObject.SetActive(false);
-            p.OffTriggerObject.SetActive(true);
+            buttonspressed--;
         }
         if (collision.gameObject.CompareTag("Object"))
         {
-            p.OnTriggerObject.SetActive(false);
-            p.OffTriggerObject.SetActive(true);
+            buttonspressed--;
         }
     }
 }

@@ -212,9 +212,9 @@ public class PlayerController : Gamemanager
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+     void OnTriggerEnter2D(Collider2D pcollision)
     {
-        if (collision.gameObject.CompareTag("Box"))
+        if (pcollision.gameObject.CompareTag("Box"))
         {
             touch = true;
             checkpoints++;
