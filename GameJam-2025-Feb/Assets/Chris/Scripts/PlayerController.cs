@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Gamemanager 
 {
-    InputManager Manager;
+    public InputManager Manager;
     public float speed;
     public GameObject Player;
     public GameObject OnTriggerObject; 
