@@ -19,8 +19,9 @@ public class LevelButtons : PlayerController
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < ; i++) {
+        for (int i = 0; i < textMesh.Count; i++) {
         textMesh[i].text = (buttonspressed + " / " + Buttons);
+        }
 
         if (buttonspressed == Buttons)
         {
