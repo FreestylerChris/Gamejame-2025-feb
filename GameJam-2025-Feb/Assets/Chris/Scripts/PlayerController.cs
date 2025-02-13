@@ -28,7 +28,11 @@ public class PlayerController : Gamemanager
     public float ghostSpeed = 5f; // Snelheid van de ghost
     public Vector3 start;
    public bool reset;
+    public List<GameObject> Checkpoints = new List<GameObject>();
     public Sprite OnCheckpoint;
+
+
+    public GameObject currentCheckpoint;
     private void OnEnable()
     {
        Manager.Enable();
@@ -59,8 +63,22 @@ public class PlayerController : Gamemanager
         {
             reset = false;
         }
-        
-        
+
+
+
+        for (int i = 0; i < Checkpoints.Count;)
+        {
+            if (Checkpoints[i].GetComponent<SpriteRenderer>().sprite != OnCheckpoint)
+            {
+                currentCheckpoint = Checkpoints[i];
+                Player.transform.position = Checkpoints[i].transform.position;
+            }
+            else
+            {
+                i++;
+            }
+        }
+
     }
 
     public void Movement()
@@ -193,8 +211,8 @@ public class PlayerController : Gamemanager
     {
         if (collision.gameObject.CompareTag("Box"))
         {
-            Checkpoints.GetComponent<SpriteRenderer>().sprite = OnCheckpoint;
-            Checkpoints.GetComponent<CircleCollider2D>().enabled = false;
+            currentCheckpoint.GetComponent<SpriteRenderer>().sprite = OnCheckpoint;
+            currentCheckpoint.GetComponent<CircleCollider2D>().enabled = false;
             playerPath.Clear();
             isRecording = true;
             Destroy(ghost);
