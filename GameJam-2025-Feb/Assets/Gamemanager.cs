@@ -20,15 +20,6 @@ public class Gamemanager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // ResetObject[ResetObject.Count].transform.position = Startpoints[Startpoints.Count].transform.position;
-        //foreach (GameObject checkpoint in Checkpoints)
-        //{
-        //    SpriteRenderer checkpointRenderer = checkpoint.GetComponent<SpriteRenderer>();
-        //    if (checkpointRenderer != null && checkpointRenderer.sprite != OnCheckpoint)
-        //    {
-        //        playerC.currentCheckpoint = checkpoint;
-        //    }
-        //}
 
 
 
