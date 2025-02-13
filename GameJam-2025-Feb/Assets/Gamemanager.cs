@@ -6,21 +6,32 @@ using UnityEngine;
 public class Gamemanager : MonoBehaviour
 {
    public PlayerController playerC;
-    int o;
 
-    public List<GameObject> ResetObjects = new List<GameObject>();
-    public GameObject Checkpoints;
+
+    public List<GameObject> ResetObject = new List<GameObject>();
+    public List<GameObject> Startpoints = new List<GameObject>();
+
+    
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
+       // ResetObject[ResetObject.Count].transform.position = Startpoints[Startpoints.Count].transform.position;
+        //foreach (GameObject checkpoint in Checkpoints)
+        //{
+        //    SpriteRenderer checkpointRenderer = checkpoint.GetComponent<SpriteRenderer>();
+        //    if (checkpointRenderer != null && checkpointRenderer.sprite != OnCheckpoint)
+        //    {
+        //        playerC.currentCheckpoint = checkpoint;
+        //    }
+        //}
 
-       
+
+
     }
 }
 

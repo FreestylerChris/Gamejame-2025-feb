@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interaction : PlayerController
+public class Interaction : MonoBehaviour
 {
-
+    PlayerController p;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,28 +14,28 @@ public class Interaction : PlayerController
     // Update is called once per frame
     void Update()
     {
-        if (reset)
+        if (p.reset)
         {
-            OnTriggerObject.SetActive(false);
-            OffTriggerObject.SetActive(true);
+            p.OnTriggerObject.SetActive(false);
+            p.OffTriggerObject.SetActive(true);
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            OnTriggerObject.SetActive(true);
-            OffTriggerObject.SetActive(false);
+            p.OnTriggerObject.SetActive(true);
+            p.OffTriggerObject.SetActive(false);
         }
         if (collision.gameObject.CompareTag("Ghost"))
         {
-            OnTriggerObject.SetActive(true);
-            OffTriggerObject.SetActive(false);
+            p.OnTriggerObject.SetActive(true);
+            p.OffTriggerObject.SetActive(false);
         }
         if (collision.gameObject.CompareTag("Object"))
         {
-            OnTriggerObject.SetActive(true);
-            OffTriggerObject.SetActive(false);
+            p.OnTriggerObject.SetActive(true);
+            p.OffTriggerObject.SetActive(false);
         }
     }
 
@@ -43,19 +43,19 @@ public class Interaction : PlayerController
     {
         if (collision.gameObject.CompareTag("Ghost"))
         {
-            OnTriggerObject.SetActive(false);
-            OffTriggerObject.SetActive(true);
+            p.OnTriggerObject.SetActive(false);
+            p.OffTriggerObject.SetActive(true);
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            OnTriggerObject.SetActive(false);
-            OffTriggerObject.SetActive(true);
+            p.OnTriggerObject.SetActive(false);
+            p.OffTriggerObject.SetActive(true);
         }
         if (collision.gameObject.CompareTag("Object"))
         {
-            OnTriggerObject.SetActive(false);
-            OffTriggerObject.SetActive(true);
+            p.OnTriggerObject.SetActive(false);
+            p.OffTriggerObject.SetActive(true);
         }
     }
 }
