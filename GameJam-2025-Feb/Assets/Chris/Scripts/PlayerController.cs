@@ -1,13 +1,14 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Gamemanager 
+public class PlayerController : MonoBehaviour 
 {
-    public InputManager Manager;
+    [Header("Player")]
+    InputManager Manager;
     public float speed;
     public GameObject Player;
     public GameObject OnTriggerObject; 
@@ -16,15 +17,15 @@ public class PlayerController : Gamemanager
     public Animator a;
 
     Vector2 Moving;
+    public bool checking;
 
     public float cooldown;
-    public int i;
 
     public GameObject ghostPrefab; // Sleep hier je Ghost prefab in
     public GameObject ghost; 
     public List<Vector3> playerPath = new List<Vector3>(); // Positiegeschiedenis van speler
 
-    public bool isRecording = true;
+    public bool isRecording;
     public float ghostSpeed = 5f; // Snelheid van de ghost
     public Vector3 start;
    public bool reset;
@@ -33,9 +34,13 @@ public class PlayerController : Gamemanager
 
     public bool touch;
     public int checkpoints;
+    public float check;
+    public float check2;
 
 
     public GameObject currentCheckpoint;
+    public GameObject previousCheckpoint;
+    public int checkpointIndex;
     private void OnEnable()
     {
        Manager.Enable();
@@ -50,6 +55,7 @@ public class PlayerController : Gamemanager
     }
     void Start()
     {
+        isRecording = true;
         start = Player.transform.position;
         StartCoroutine(RecordPlayerPath());
     }
@@ -66,17 +72,20 @@ public class PlayerController : Gamemanager
         {
             reset = false;
         }
-       
 
-        for (int i = 0; i < Checkpoints.Count; i++)
+            check = Vector2.Distance(Player.transform.position, Checkpoints[checkpointIndex].transform.position);
+            
+                    currentCheckpoint = Checkpoints[checkpointIndex];
+        if (checkpointIndex > 0)
         {
-            if (Checkpoints[i].GetComponent<SpriteRenderer>().sprite != OnCheckpoint)
-            {
-                currentCheckpoint = Checkpoints[i];
-                // Zet dit checkpoint als spawn
-            }
+
+                    previousCheckpoint = Checkpoints[checkpointIndex- 1];
         }
 
+
+     
+
+        
     }
 
     public void Movement()
@@ -160,7 +169,7 @@ public class PlayerController : Gamemanager
     public void GhostAbility()
     {
         
-        if (Manager.Player.Interact.WasPressedThisFrame() && cooldown == 0f)
+        if (Manager.Player.Interact.WasPressedThisFrame())
         {
             ActivateGhost();
         }
@@ -175,11 +184,11 @@ public class PlayerController : Gamemanager
 
     public void ResetLevel()
     {
-        if (checkpoints > 0)
+        if (currentCheckpoint != null && checkpointIndex > 0)
         {
-            Player.transform.position = currentCheckpoint.transform.position;
+            Player.transform.position = previousCheckpoint.transform.position;
         }
-        else
+        else if (checkpointIndex == 0)
         {
             Player.transform.position = start;
 
@@ -190,13 +199,18 @@ public class PlayerController : Gamemanager
         void SpawnGhost()
     {
         if (playerPath.Count == 0) return; // Geen data? Stop hier.
+        if (ghost != null)
+        {
+            Destroy(ghost); // Verwijder de oude ghost voordat je een nieuwe spawn't
+        }
 
-        ghost = Instantiate(ghostPrefab, playerPath[0], Quaternion.identity); // Spawn de ghost
+        ghost = Instantiate(ghostPrefab, playerPath[0], Quaternion.identity); // Spawn een nieuwe ghost
         StartCoroutine(PlayGhostPathSmooth());
     }
+
     IEnumerator PlayGhostPathSmooth()
     {
-        for (i = 0; i < playerPath.Count - 1; i++)
+        for (int i = 0; i < playerPath.Count - 1; i++)
         {
             Vector3 startPos = playerPath[i];
             Vector3 endPos = playerPath[i + 1];
@@ -212,19 +226,46 @@ public class PlayerController : Gamemanager
         }
     }
 
-     void OnTriggerEnter2D(Collider2D pcollision)
+
+    void OnTriggerEnter2D(Collider2D pcollision)
     {
+        print("trigger");
         if (pcollision.gameObject.CompareTag("Box"))
         {
-            touch = true;
-            checkpoints++;
-            currentCheckpoint.GetComponent<SpriteRenderer>().sprite = OnCheckpoint;
-            playerPath.Clear();
-            isRecording = true;
-            touch = false;
-            Destroy(ghost);
-            StartCoroutine(RecordPlayerPath());
+            if (checkpointIndex > 0)
+            {
+                if (Checkpoints[checkpointIndex - 1].GetComponent<SpriteRenderer>().sprite == OnCheckpoint)
+                {
+
+                    touch = true;
+                }
+            }
+            else
+            {
+                touch = true;
+            }
+             if(touch && check < 2f)
+            {
+                Checkpoints[checkpointIndex].GetComponent<SpriteRenderer>().sprite = OnCheckpoint;
+
+                checkpointIndex++;
+                touch = false;
+                playerPath.Clear();
+
+                isRecording = true;
+                StartCoroutine(RecordPlayerPath());
+            }
+        
+            
+            
+           
+           
+            
+
+
+
         }
+
     }
 
 
