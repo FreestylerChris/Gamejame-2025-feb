@@ -98,55 +98,44 @@ public class PlayerController : MonoBehaviour
 
         if (Moving.x == 0 && Moving.y == 0)
         {
+            ResetAnimationState();
             a.SetBool("Idle", true);
-
-            a.SetBool("Right", false);
-            a.SetBool("Left", false);
-            a.SetBool("Up", false);
-            a.SetBool("Down", false);
         }
        
         else  if (Moving.x > 0)
         {
+            ResetAnimationState();
             a.SetBool("Right", true);
-
-            a.SetBool("Left", false);
-            a.SetBool("Idle", false);
-            a.SetBool("Up", false);
-            a.SetBool("Down", false);
 
         }
         else if (Moving.x < 0)
         {
+            ResetAnimationState();
             a.SetBool("Left", true);
-
-            a.SetBool("Right", false);
-            a.SetBool("Idle", false);
-            a.SetBool("Up", false);
-            a.SetBool("Down", false);
-        }
 
 
 
          else if (Moving.y > 0)
         {
+            ResetAnimationState();
             a.SetBool("Up", true);
-
-            a.SetBool("Right", false);
-            a.SetBool("Left", false);
-            a.SetBool("Idle", false);
-            a.SetBool("Down", false);
 
         }
        else  if (Moving.y < 0)
         {
+            ResetAnimationState();
             a.SetBool("Down", true);
 
-            a.SetBool("Right", false);
-            a.SetBool("Left", false);
-            a.SetBool("Idle", false);
-            a.SetBool("Up", false);
         }
+    }
+
+    void ResetAnimationState()
+    {
+        a.SetBool("Right", false);
+        a.SetBool("Left", false);
+        a.SetBool("Up", false);
+        a.SetBool("Down", false);
+        a.SetBool("Idle", false);
     }
     IEnumerator RecordPlayerPath()
     {
